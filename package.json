@@ -4,7 +4,8 @@
   "description": "一个弱化无数功能的React",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --mode development"
   },
   "repository": {
     "type": "git",
@@ -20,14 +21,16 @@
   },
   "homepage": "https://github.com/dcison/simpleReact#readme",
   "devDependencies": {
+    "babel-core": "^6.26.3",
     "babel-eslint": "^9.0.0",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
     "eslint": "^5.6.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "webpack": "^4.19.1"
+    "eslint-plugin-standard": "^4.0.0"
   }
 }
