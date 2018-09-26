@@ -1,0 +1,21 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "modules": false
+      }
+    ],
+    "react",
+    "stage-1"
+  ],
+  "plugins": [
+    [
+      "transform-react-jsx",
+      {
+        "pragma": "React.createElement"
+      }
+    ],
+    "transform-object-rest-spread"
+  ]
+}

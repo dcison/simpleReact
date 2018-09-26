@@ -1,8 +1,9 @@
+import createElement from './ReactElement.js';
 
 export default {
-  
+  // crearte
+  createElement,
   render: (vNode, container) => {
-    console.log*
     console.log(vNode, container);
   }
 };
