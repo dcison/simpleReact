@@ -1,22 +1,47 @@
 import ReactComponent from './ReactComponent';
 import {initComponent} from './ComponentFactor';
+// import {addEvent} from '../SyntheticEvent';
+import $ from 'jquery';
+
 
 
 export default class DomComponent extends ReactComponent {
-
-  // constructor(props){
-  //   super(props);
-  //   console.log(props);
-  // }
 
   mountComponent(rootId){
     this._nodeId = rootId;
     let {key, props, type, props: {children = []}} = this._vNode;
     let content = '', 
-      tagLeft = `<${type}`,
+      tagLeft = `<${type} data-reactId="${this._nodeId}"`,
       tagRight = `</${type}>`; //左闭合与右闭合
     for(let key in props){
-      if (props[key] && key !== 'children'){
+
+      if(key === 'style'){
+        let style = '';
+        Object.keys(props[key]).map(item => {
+          if (/[A-Z]/g.test(item)){
+            let _style = item.split('').map(letter => {
+              if (/[A-Z]/.test(letter)){
+                return `-${letter.toLocaleLowerCase()}`;
+              }else{
+                return letter;
+              }
+            }).join('');
+            style += `${_style}:${props[key][item]};`;
+          }else{
+            style += `${item}:${props[key][item]};`;
+          }
+        });
+        tagLeft += ` style="${style}"`;
+      }
+
+      if (/^on[A-Za-z]*/g.test(key)){
+        // console.log(key, props[key]);
+        // var node = document.querySelector('[data-reactid="0.1"]');
+        // addEvent(`data-reactId="${this._nodeId}"`, key, props[key]);
+        const eventType = key.replace('on', '').toLocaleLowerCase();
+        $(document).delegate(`[data-reactId="${this._nodeId}"]`, `${eventType}`, props[key]);
+      }
+      if (props[key] && key !== 'children' && key !== 'style'){
         tagLeft += ` ${key=== 'className'?'class':key}=${props[key]}`;
       }
     }
@@ -25,7 +50,6 @@ export default class DomComponent extends ReactComponent {
       let cNode = initComponent(value);
       cNode._nodeId = `${rootId}.${index}`;
       let render = cNode.mountComponent(cNode._nodeId);
-      console.log(render);
       content += render;
     });
     return `${tagLeft}>${content}${tagRight}`;
