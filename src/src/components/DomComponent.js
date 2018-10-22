@@ -15,7 +15,7 @@ export default class DomComponent extends ReactComponent {
       tagRight = `</${type}>`; //左闭合与右闭合
     for(let key in props){
 
-      if(key === 'style'){
+      if(key === 'style'){//处理驼峰式样式
         let style = '';
         Object.keys(props[key]).map(item => {
           if (/[A-Z]/g.test(item)){
@@ -35,11 +35,8 @@ export default class DomComponent extends ReactComponent {
       }
 
       if (/^on[A-Za-z]*/g.test(key)){
-        // console.log(key, props[key]);
-        // var node = document.querySelector('[data-reactid="0.1"]');
-        // addEvent(`data-reactId="${this._nodeId}"`, key, props[key]);
         const eventType = key.replace('on', '').toLocaleLowerCase();
-        $(document).delegate(`[data-reactId="${this._nodeId}"]`, `${eventType}`, props[key]);
+        $(document).delegate(`[data-reactId='${this._nodeId}']`, `${eventType}`, props[key]);
       }
       if (props[key] && key !== 'children' && key !== 'style'){
         tagLeft += ` ${key=== 'className'?'class':key}=${props[key]}`;
@@ -53,10 +50,9 @@ export default class DomComponent extends ReactComponent {
       content += render;
     });
     return `${tagLeft}>${content}${tagRight}`;
-    // return 'hello';
   }
 
-  // updateComponent(nextVNode){
-    
-  // }
+  updateComponent(nextVNode){
+    //待写
+  }
 }
