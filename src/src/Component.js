@@ -4,6 +4,6 @@ export default class {
   }
 
   setState(newState) {
-    this._reactInternalInstance.updateComponent(null,newState)
+    this._reactInternalInstance.updateComponent(null, newState);
   }
 }

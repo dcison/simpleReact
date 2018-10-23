@@ -1,6 +1,6 @@
 import ReactComponent from './ReactComponent';
-import {initComponent,judgeUpdateReactComponent} from './ComponentFactor';
-import $ from 'jquery'
+import {initComponent, judgeUpdateReactComponent} from './ComponentFactor';
+import $ from 'jquery';
 
 export default class CompositeComponent extends ReactComponent {
   constructor(ele){
@@ -15,15 +15,15 @@ export default class CompositeComponent extends ReactComponent {
 
     this._instance = inst;
 
-    inst._reactInternalInstance = this
+    inst._reactInternalInstance = this;
 
     //调用willmount方法
-    inst.componentWillMount && inst.componentWillMount()
+    inst.componentWillMount && inst.componentWillMount();
 
     // 调用自定义组件的render方法，返回一个Vdom
-    const renderedVdom = inst.render()
+    const renderedVdom = inst.render();
 
-    const renderedComponent = initComponent(renderedVdom)
+    const renderedComponent = initComponent(renderedVdom);
     // this._renderedComponent = renderedComponent
     //调用didmount
     // $(document).on('mountReady', () => {
@@ -32,20 +32,20 @@ export default class CompositeComponent extends ReactComponent {
 
     this._renderComponent = renderedComponent;
 
-    inst.componentDidMount && inst.componentDidMount()
+    inst.componentDidMount && inst.componentDidMount();
 
-    return renderedComponent.mountComponent(this._rootNodeId)
+    return renderedComponent.mountComponent(this._rootNodeId);
 
   }
 
-  updateComponent(nextVNode , newState){
+  updateComponent(nextVNode, newState){
     const inst = this._instance;
-    const nextState = {...inst.state, ...newState}
+    const nextState = {...inst.state, ...newState};
     const nextProps = this._vNode.props;
 
     if (inst.shouldComponentUpdate && !inst.shouldComponentUpdate(nextProps, nextState)) return;
     
-    inst.componentWillUpdate && inst.componentWillUpdate(nextProps,nextState);
+    inst.componentWillUpdate && inst.componentWillUpdate(nextProps, nextState);
 
     inst.state = nextState;
     inst.props = nextProps;
@@ -55,18 +55,18 @@ export default class CompositeComponent extends ReactComponent {
     const prevRenderVDom = prevComponent._vNode;
     const nextRenderVDom = inst.render();
 
-    if (!judgeUpdateReactComponent(prevRenderVDom,nextRenderVDom)){
+    if (judgeUpdateReactComponent(prevRenderVDom, nextRenderVDom)){
       //更新哦
-      console.log(prevComponent)
-      // prevComponent.updateComponent(nextRenderVDom)
+      // console.log(prevComponent);
+      prevComponent.updateComponent(nextRenderVDom);
       // inst.componentDidUpdate && inst.componentDidUpdate()
     }else{
       // 重新渲染
-      this._renderedComponent = initComponent(nextRenderVDom)
+      this._renderedComponent = initComponent(nextRenderVDom);
       // 重新生成对应的元素内容
-      const nextMarkUp = this._renderedComponent.mountComponent(this._rootNodeId)
+      const nextMarkUp = this._renderedComponent.mountComponent(this._rootNodeId);
       // 替换整个节点
-      $(`[data-reactid="${this._rootNodeId}"]`).replaceWith(nextMarkUp)
+      $(`[data-reactid="${this._rootNodeId}"]`).replaceWith(nextMarkUp);
     }
   }
 }
