@@ -34,7 +34,7 @@ export default class CompositeComponent extends ReactComponent {
 
     inst.componentDidMount && inst.componentDidMount();
 
-    return renderedComponent.mountComponent(this._rootNodeId);
+    return renderedComponent.mountComponent(this._nodeId);
 
   }
 

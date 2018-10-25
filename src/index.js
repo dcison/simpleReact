@@ -1,4 +1,4 @@
-import React from "./src";
+import React from './src';
 // import ReactDOM from "./bl";
 // import "./test.css";
 
@@ -28,7 +28,7 @@ class TestApp extends React.Component {
   //   console.log("updated",preState)
   // }
   componentWillMount(){
-    console.log("I will mount");
+    console.log('I will mount');
   }
   // getChildContext() {
   //   return {
@@ -37,15 +37,15 @@ class TestApp extends React.Component {
   //   };
   // }
   componentDidMount() {
-       console.log("mounted",this);
-   //this.setState({ text: "world666" });
+    console.log('mounted');
+    //this.setState({ text: "world666" });
   }
   constructor(props) {
     super(props);
     this.state = {
-      color: "red",
-      clas: "hello",
-      text: "hello"
+      color: 'red',
+      clas: 'hello',
+      text: 'hello'
     };
     // setInterval(
     //   function() {
@@ -71,9 +71,9 @@ class TestApp extends React.Component {
   }
 
   handleClick() {
-      this.setState({
-        color: 'green'
-      })
+    this.setState({
+      color: 'green'
+    });
   }
 
   render() {
@@ -111,11 +111,11 @@ class TestApp extends React.Component {
 }
 
 TestApp.defaultProps = {
-  hello: "hello"
+  hello: 'hello'
 };
 
-let root = document.createElement("div");
-root.setAttribute("id", "root");
+let root = document.createElement('div');
+root.setAttribute('id', 'root');
 document.body.appendChild(root);
 
-React.render(<TestApp />, document.getElementById("root"));
+React.render(<TestApp />, document.getElementById('root'));

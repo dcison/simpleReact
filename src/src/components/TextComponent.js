@@ -10,7 +10,7 @@ export default class TextComponent extends ReactComponent {
   updateComponent(nextVNode){
     if (nextVNode != this._vNode){
       this._vNode = nextVNode;
-      document.querySelector(`[data-reactid="${this._rootNodeId}"`).innerHTML = this._vNode;
+      document.querySelector(`[data-reactid="${this._nodeId}"`).innerHTML = this._vNode;
     }
   }
 }
