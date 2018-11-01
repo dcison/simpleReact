@@ -1,5 +1,5 @@
 import ReactComponent from './ReactComponent';
-
+import $ from 'jquery';
 
 export default class TextComponent extends ReactComponent {
   mountComponent(rootId){
@@ -8,9 +8,10 @@ export default class TextComponent extends ReactComponent {
   }
 
   updateComponent(nextVNode){
+
     if (nextVNode != this._vNode){
       this._vNode = nextVNode;
-      document.querySelector(`[data-reactid="${this._nodeId}"`).innerHTML = this._vNode;
+      $(`[data-reactid="${this._nodeId}"]`).html(this._vNode);
     }
   }
 }

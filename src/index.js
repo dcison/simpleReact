@@ -102,7 +102,7 @@ class TestApp extends React.Component {
       <div>
         {/* <Item />   */}
         {/* <span style={{color: this.state.color,fontSize: '32px'}} >test</span> */}
-        <button onclick={()=>this.handleClick()}>hello</button>
+        <button onclick={()=>this.handleClick()} style={{color: this.state.color}}>hello</button>
         {this.state.color}
       </div>
       // </div>

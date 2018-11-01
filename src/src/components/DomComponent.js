@@ -79,7 +79,7 @@ export default class DomComponent extends ReactComponent {
 
     this._vNode = nextVNode;
 
-    this._updateDOMProperties(lastProps, nextProps);
+    this._updateDOMProperties(lastProps.children, nextProps.children);
 
     this._updateDomChildren(nextVNode.props.children);
 
@@ -87,7 +87,9 @@ export default class DomComponent extends ReactComponent {
 
 
   _updateDOMProperties(last, next) {
+
     for (let key in last) {//处理旧属性
+      
       if (next.hasOwnProperty(key) || !last.hasOwnProperty(key)) continue;
 
       if (/^on[A-Za-z]*/g.test(key)) {
@@ -102,6 +104,7 @@ export default class DomComponent extends ReactComponent {
     }
 
     for (let key in next) {
+
       if (key === 'children') continue;//如果是children，忽略
 
       // 更新事件属性
@@ -115,31 +118,27 @@ export default class DomComponent extends ReactComponent {
         $(document).delegate(`[data-reactid="${this._nodeId}"]`, `${eventType}.${this._nodeId}`, next[key]);
         continue;
       }
-
       // 更新普通属性
       $(`[data-reactid="${this._nodeId}"]`).prop(key, next[key]);
     }
-
   }
 
 
   _updateDomChildren(children) {
     updateDepth++;
     this._diff(diffQueue, children);
-    updateDepth--;
-    updateDepth === 0 && console.log(diffQueue);
-    if (updateDepth === 0) {
-      // 具体的dom渲染
-      this._patch(diffQueue);
-      diffQueue = [];
-    }
+    // updateDepth--;
+    // if (updateDepth === 0) {
+    //   // 具体的dom渲染
+    //   this._patch(diffQueue);
+    //   diffQueue = [];
+    // }
   }
 
   _patch(updates) {
     // 处理移动和删除的
     updates.forEach(({ type, fromIndex, toIndex, parentNode, parentId, markup }) => {
       const updatedChild = $(parentNode.children().get(fromIndex));
-
       switch (type) {
         case UPDATE_TYPES.INSERT_MARKUP:
           insertChildAt(parentNode, $(markup), toIndex); // 插入
@@ -160,7 +159,7 @@ export default class DomComponent extends ReactComponent {
   _diff(diffQueue, children) {
     let prevChildComponents = array2Map(this._renderedChildComponents);
     let nextChildComponents = generateComponentsMap(prevChildComponents, children);
-    
+
     for(let name of nextChildComponents.keys()){
       nextChildComponents.has(name) && this._renderedChildComponents.push(nextChildComponents.get(name));
     }
@@ -218,6 +217,8 @@ export default class DomComponent extends ReactComponent {
       }
 
     }
+
+
 
     // 对于老的节点里有，新的节点里没有的，全部删除
     for (let name of prevChildComponents.keys() ) {
